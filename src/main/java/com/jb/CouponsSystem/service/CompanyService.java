@@ -19,7 +19,7 @@ public class CompanyService {
 	private CouponRepository couponRepository;
 
 	public void addCoupon(Coupon coupon, String companyEmail) throws ServerException {
-		if (companyRepository.findByEmail(companyEmail) == null) {
+		if (companyRepository.findByEmail(companyEmail).size() == 0) {
 			throw new ServerException("Can't add coupon: company not found");
 		}
 		long companyId = companyRepository.findByEmail(companyEmail).get(0).getId();
@@ -43,7 +43,7 @@ public class CompanyService {
 	}
 
 	public List<Coupon> getAllCoupons(String companyEmail) throws ServerException {
-		if (companyRepository.findByEmail(companyEmail) == null) {
+		if (companyRepository.findByEmail(companyEmail).size() == 0) {
 			throw new ServerException("Can't find coupons: company not found");
 		}
 		return (List<Coupon>) couponRepository
@@ -55,7 +55,7 @@ public class CompanyService {
 	}
 
 	public List<Company> getCompanyByEmail(String email) throws ServerException {
-		if (companyRepository.findByEmail(email) == null) {
+		if (companyRepository.findByEmail(email).size() == 0) {
 			throw new ServerException("Can't find company: email not found");
 		}
 		return companyRepository.findByEmail(email);

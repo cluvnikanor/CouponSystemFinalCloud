@@ -22,7 +22,7 @@ public class CustomerService {
 	private CouponRepository couponRepository;
 
 	public void couponPurchase(String customerEmail, long couponId) throws ServerException {
-		if (customerRepository.findByEmail(customerEmail) == null) {
+		if (customerRepository.findByEmail(customerEmail).size() == 0) {
 			throw new ServerException("Can't purchase coupon: customer not found");
 		}
 		if (couponRepository.findById(couponId) == null) {
@@ -46,7 +46,7 @@ public class CustomerService {
 	}
 
 	public List<Coupon> getCustomerCoupons(String customerEmail) throws ServerException {
-		if (customerRepository.findByEmail(customerEmail) == null) {
+		if (customerRepository.findByEmail(customerEmail).size() == 0) {
 			throw new ServerException("Can't find coupons: customer not found");
 		}
 		Customer customer = customerRepository.findByEmail(customerEmail).get(0);
@@ -58,33 +58,12 @@ public class CustomerService {
 	}
 
 	public List<Customer> getCustomerByEmail(String email) throws ServerException {
-		if (customerRepository.findByEmail(email) == null) {
+		if (customerRepository.findByEmail(email).size() == 0) {
 			throw new ServerException("Can't find customer: email not found");
 		}
 		return customerRepository.findByEmail(email);
 	}
 
-//	public void addCustomer(Customer customer) {
-//		customerRepository.save(customer);
-//	}
-//
-//	public void updateCustomer(Customer customer) {
-//		customerRepository.save(customer);
-//	}
-//
-//	public void deleteCustomer(long customerId) {
-//		customerRepository.deleteById((long) customerId);
-//	}
-//
-//	public ArrayList<Customer> getAllCustomers() {
-//		return (ArrayList<Customer>) customerRepository.findAll();
-//	}
-//
-//	public Customer getOneCustomer(long customerId) {
-//		return customerRepository.getOne((long) customerId);
-//	}
-
-	// Important for login
 	public ArrayList<Customer> getCustomerByEmailAndPassword(String email, String password) {
 		return (ArrayList<Customer>) customerRepository.findByEmailAndPassword(email, password);
 	}
