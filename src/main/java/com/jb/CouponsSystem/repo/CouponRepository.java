@@ -1,6 +1,7 @@
 package com.jb.CouponsSystem.repo;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,16 +40,6 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
 	@Query("SELECT c FROM Coupon c WHERE c.companyId = :companyId AND c.price >= :minPrice AND c.price <= :maxPrice")
 	List<Coupon> findAllByCompanyBetweenPrices(long companyId, Double minPrice, Double maxPrice);
 
-//	@Transactional
-//	@Modifying
-//	@Query(value = "DELETE FROM coupons.coupons_customers WHERE coupon_id = :couponId", nativeQuery = true)
-//	void deleteCouponCustomers(long couponId);
-
-//	@Transactional
-//	@Modifying
-//	@Query(value = "DELETE FROM coupons.companies_coupons WHERE company_id = :companyId", nativeQuery = true)
-//	void deleteCompanyCoupons(long companyId);
-
 	@Transactional
 	@Modifying
 	@Query(value = "DELETE FROM coupons WHERE company_id = :companyId", nativeQuery = true)
@@ -58,4 +49,8 @@ public interface CouponRepository extends JpaRepository<Coupon, Long> {
 			+ "WHERE customer_id = :customerId", nativeQuery = true)
 	List<Long> findAllIdsByCustomerId(long customerId);
 
+	@Transactional
+	@Modifying
+	@Query(value = "DELETE FROM coupons WHERE end_date > :endDate", nativeQuery = true)
+	void deleteAllByEndDate(LocalDate endDate);
 }
