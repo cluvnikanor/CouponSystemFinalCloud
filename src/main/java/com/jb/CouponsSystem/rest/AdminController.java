@@ -65,6 +65,21 @@ public class AdminController {
 		return new ResponseEntity<UserMessage>(new UserMessage("Update successfully"), HttpStatus.OK);
 	}
 
+	@PutMapping("/updateCompany2")
+	public ResponseEntity<UserMessage> updateCompany2(@RequestParam(name = "t") String token,
+			@RequestParam(name = "companyId") long companyId, @RequestParam(name = "newEmail") String newEmail,
+			@RequestParam(name = "newPassword") String newPassword) {
+		if (!tokenManager.validateUser(UUID.fromString(token), UserType.ADMIN)) {
+			return new ResponseEntity<UserMessage>(new UserMessage("Unauthorized"), HttpStatus.UNAUTHORIZED);
+		}
+		try {
+			adminService.updateCompany2(companyId, newEmail, newPassword);
+		} catch (ServerException e) {
+			return new ResponseEntity<UserMessage>(new UserMessage(e.getMessage()), HttpStatus.OK);
+		}
+		return new ResponseEntity<UserMessage>(new UserMessage("Update successfully"), HttpStatus.OK);
+	}
+
 	@PostMapping("/deleteCompany")
 	public ResponseEntity<UserMessage> deleteCompany(@RequestParam(name = "t") String token,
 			@RequestParam(name = "email") String email) {

@@ -42,6 +42,16 @@ public class AdminService {
 		companyRepository.save(company);
 	}
 
+	public void updateCompany2(long companyId, String newEmail, String newPassword) throws ServerException {
+		if (companyRepository.getOne(companyId) == null) {
+			throw new ServerException("Can't update company: company not found");
+		}
+		Company company = companyRepository.getOne(companyId);
+		company.setEmail(newEmail);
+		company.setPassword(newPassword);
+		companyRepository.save(company);
+	}
+
 	public void deleteCompany(String email) throws ServerException {
 		if (companyRepository.findByEmail(email).size() == 0) {
 			throw new ServerException("Can't delete company: email not found");
