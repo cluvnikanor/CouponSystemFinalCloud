@@ -23,17 +23,17 @@ public class AdminService {
 	CustomerRepository customerRepository;
 
 	public void addCompany(Company company) throws ServerException {
-		if (!companyRepository.findByEmail(company.getEmail()).isEmpty()) {
+		if (companyRepository.findByEmail(company.getEmail()) != null) {
 			throw new ServerException("Can't add company: email is used");
 		}
-		if (!companyRepository.findByName(company.getName()).isEmpty()) {
+		if (companyRepository.findByName(company.getName()) != null) {
 			throw new ServerException("Can't add company: name is used");
 		}
 		companyRepository.save(company);
 	}
 
 	public void updateCompany(String existEmail, String newEmail, String newPassword) throws ServerException {
-		if (companyRepository.findByEmail(existEmail).isEmpty()) {
+		if (companyRepository.findByEmail(existEmail) == null) {
 			throw new ServerException("Can't update company: email not found");
 		}
 		Company company = companyRepository.findByEmail(existEmail).get(0);
@@ -43,7 +43,7 @@ public class AdminService {
 	}
 
 	public void deleteCompany(String email) throws ServerException {
-		if (companyRepository.findByEmail(email).isEmpty()) {
+		if (companyRepository.findByEmail(email) == null) {
 			throw new ServerException("Can't delete company: email not found");
 		}
 		Company company = companyRepository.findByEmail(email).get(0);
@@ -52,7 +52,7 @@ public class AdminService {
 	}
 
 	public List<Company> getCompanyByEmail(String email) throws ServerException {
-		if (companyRepository.findByEmail(email).isEmpty()) {
+		if (companyRepository.findByEmail(email) == null) {
 			throw new ServerException("Email not found");
 		}
 		return companyRepository.findByEmail(email);
@@ -63,14 +63,14 @@ public class AdminService {
 	}
 
 	public void addCustomer(Customer customer) throws ServerException {
-		if (!customerRepository.findByEmail(customer.getEmail()).isEmpty()) {
+		if (!(customerRepository.findByEmail(customer.getEmail()) == null)) {
 			throw new ServerException("Can't add company: email is used");
 		}
 		customerRepository.save(customer);
 	}
 
 	public void updateCustomer(String existEmail, String newEmail, String newPassword) throws ServerException {
-		if (customerRepository.findByEmail(existEmail).isEmpty()) {
+		if (customerRepository.findByEmail(existEmail) == null) {
 			throw new ServerException("Can't update customer: email not found");
 		}
 		Customer customer = customerRepository.findByEmail(existEmail).get(0);
@@ -80,7 +80,7 @@ public class AdminService {
 	}
 	
 	public void deleteCustomer(String email) throws ServerException {
-		if (customerRepository.findByEmail(email).isEmpty()) {
+		if (customerRepository.findByEmail(email) == null) {
 			throw new ServerException("Can't delete customer: email not found");
 		}
 		Customer customer = customerRepository.findByEmail(email).get(0);
@@ -89,7 +89,7 @@ public class AdminService {
 	}
 
 	public List<Customer> getCustomerByEmail(String email) throws ServerException {
-		if (customerRepository.findByEmail(email).isEmpty()) {
+		if (customerRepository.findByEmail(email) == null) {
 			throw new ServerException("Email not found");
 		}
 		return customerRepository.findByEmail(email);

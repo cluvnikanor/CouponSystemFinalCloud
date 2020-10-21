@@ -22,10 +22,10 @@ public class CustomerService {
 	private CouponRepository couponRepository;
 
 	public void couponPurchase(String customerEmail, long couponId) throws ServerException {
-		if (customerRepository.findByEmail(customerEmail).isEmpty()) {
+		if (customerRepository.findByEmail(customerEmail) == null) {
 			throw new ServerException("Can't purchase coupon: customer not found");
 		}
-		if (couponRepository.findById(couponId).isEmpty()) {
+		if (couponRepository.findById(couponId) == null) {
 			throw new ServerException("Can't purchase coupon: coupon not found");
 		}
 		Customer customer = customerRepository.findByEmail(customerEmail).get(0);
@@ -46,7 +46,7 @@ public class CustomerService {
 	}
 
 	public List<Coupon> getCustomerCoupons(String customerEmail) throws ServerException {
-		if (customerRepository.findByEmail(customerEmail).isEmpty()) {
+		if (customerRepository.findByEmail(customerEmail) == null) {
 			throw new ServerException("Can't find coupons: customer not found");
 		}
 		Customer customer = customerRepository.findByEmail(customerEmail).get(0);
@@ -58,7 +58,7 @@ public class CustomerService {
 	}
 
 	public List<Customer> getCustomerByEmail(String email) throws ServerException {
-		if (customerRepository.findByEmail(email).isEmpty()) {
+		if (customerRepository.findByEmail(email) == null) {
 			throw new ServerException("Can't find customer: email not found");
 		}
 		return customerRepository.findByEmail(email);
