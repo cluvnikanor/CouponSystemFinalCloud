@@ -5,11 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication // (scanBasePackages= {"com.jb.CouponsSystem"})
-public class CouponsSystemApplication {
+public class CouponsSystemApplicationLocal {
 
 	public static void main(String[] args) throws Exception {
 		@SuppressWarnings("unused")
-		ApplicationContext ctx = SpringApplication.run(CouponsSystemApplication.class, args);
+		ApplicationContext ctx = SpringApplication.run(CouponsSystemApplicationLocal.class, args);
 		System.out.println("GO");
 
 //		CompanyService companyService = ctx.getBean(CompanyService.class);

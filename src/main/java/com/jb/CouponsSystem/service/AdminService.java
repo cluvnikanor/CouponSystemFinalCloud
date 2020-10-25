@@ -88,13 +88,23 @@ public class AdminService {
 		customer.setPassword(newPassword);
 		customerRepository.save(customer);
 	}
+	
+	public void updateCustomer2(long customerId, String newEmail, String newPassword) throws ServerException {
+		if (customerRepository.getOne(customerId) == null) {
+			throw new ServerException("Can't update customer: email not found");
+		}
+		Customer customer = customerRepository.getOne(customerId);
+		customer.setEmail(newEmail);
+		customer.setPassword(newPassword);
+		customerRepository.save(customer);
+	}
 
 	public void deleteCustomer(String email) throws ServerException {
 		if (customerRepository.findByEmail(email).size() == 0) {
 			throw new ServerException("Can't delete customer: email not found");
 		}
 		Customer customer = customerRepository.findByEmail(email).get(0);
-		customerRepository.deleteCustomerCoupons(customer.getId());
+//		customerRepository.deleteCustomerCoupons(customer.getId());
 		customerRepository.deleteByEmail(email);
 	}
 
